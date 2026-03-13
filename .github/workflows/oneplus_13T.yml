@@ -17,6 +17,11 @@ on:
         required: false
         default: true
         type: boolean
+      enable_feature_n:
+        description: "不获取管理器"
+        required: false
+        default: true
+        type: boolean
   
   schedule:
     - cron: '0 22 * * *'
@@ -350,7 +355,7 @@ jobs:
          zip -r ./OnePlus13T_SukiSU_${{ env.KSUVER }}.zip *
 
       - name: 添加 KernelSU
-        if: steps.check.outputs.should_cancel != 'yes'
+        if: ${{ steps.check.outputs.should_cancel != 'yes' && !inputs.enable_feature_n }}
         run: |
           
           echo "SukiSU..."
